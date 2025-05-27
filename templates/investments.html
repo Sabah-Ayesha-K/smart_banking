@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Investment Recommendations</h2>
+
+{% if error %}
+<div class="alert alert-danger">
+    Error: {{ error }}
+</div>
+{% endif %}
+
+<form method="POST">
+    <div class="form-group">
+        <label for="customer_id">Customer ID</label>
+        <input type="text" class="form-control" id="customer_id" name="customer_id" 
+               value="{{ customer_id if customer_id }}" required>
+        <small class="form-text text-muted">
+            Try: {% for cust in sample_customers %}{{ cust }}{% if not loop.last %}, {% endif %}{% endfor %}
+        </small>
+    </div>
+    <button type="submit" class="btn btn-primary">Get Recommendations</button>
+</form>
+{% if error %}
+<div class="alert alert-danger mt-3">
+    {{ error }}
+</div>
+{% endif %}
+
+{% if recommendations %}
+<div class="mt-4">
+    <h3>Recommendations for {{ recommendations.customer_id }}</h3>
+    <p><strong>Risk Profile:</strong> {{ recommendations.risk_profile|upper }}</p>
+    
+    <h4>Spending Analysis</h4>
+    <ul>
+        <li>Total Spent: ${{ "%.2f"|format(recommendations.spending_analysis.total_spent) }}</li>
+        <li>Average Transaction: ${{ "%.2f"|format(recommendations.spending_analysis.avg_transaction) }}</li>
+    </ul>
+    
+    <h4>Recommended Investments</h4>
+    {% for rec in recommendations.recommendations %}
+    <div class="card mb-3">
+        <div class="card-header">
+            {{ rec.type|upper }} ({{ (rec.allocation * 100)|round }}% allocation)
+        </div>
+        <div class="card-body">
+            <h6>Suggestions:</h6>
+            <ul>
+                {% for fund in rec.suggestions %}
+                <li>{{ fund }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

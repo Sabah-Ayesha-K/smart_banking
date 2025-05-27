@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Smart Banking and Financial Services</h1>
+    <p class="lead">Advanced fraud detection and personalized investment recommendations</p>
+    <hr class="my-4">
+    <p>Our system helps protect your accounts and grow your wealth.</p>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Fraud Detection</h5>
+                    <p class="card-text">Identify suspicious transactions in real-time.</p>
+                    <a href="{{ url_for('fraud_detection') }}" class="btn btn-primary">Go to Fraud Detection</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Investment Recommendations</h5>
+                    <p class="card-text">Get personalized investment advice based on your spending habits.</p>
+                    <a href="{{ url_for('investment_recommendations') }}" class="btn btn-primary">Go to Investments</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
